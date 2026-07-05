@@ -1,26 +1,51 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0c;
+  --surface: #141418;
+  --surface-2: #1c1c22;
+  --foreground: #f4f2ec;
+  --muted: #9a978f;
+  --brand: #c8a45c;
+  --brand-strong: #d9b874;
+  --border: rgba(255, 255, 255, 0.10);
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-line: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-playfair);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), "Hiragino Kaku Gothic ProN", "Noto Sans JP",
+    Meiryo, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-playfair), "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background: rgba(200, 164, 92, 0.3);
+  color: #fff;
+}
+
+input,
+select,
+textarea {
+  color-scheme: dark;
 }

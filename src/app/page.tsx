@@ -1,65 +1,84 @@
-import Image from "next/image";
+import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { CarCard } from "@/components/CarCard";
+import { SearchBar } from "@/components/SearchBar";
 
-export default function Home() {
+export default async function Home() {
+  const cars = await prisma.car.findMany({
+    where: { isActive: true },
+    orderBy: { createdAt: "desc" },
+  });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div>
+      {/* ヒーロー */}
+      <section className="relative overflow-hidden border-b border-line">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            background:
+              "radial-gradient(60% 80% at 50% 0%, rgba(200,164,92,0.18), transparent 70%)",
+          }}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+        <div className="relative mx-auto max-w-6xl px-4 py-28 text-center sm:py-36">
+          <p className="text-xs uppercase tracking-[0.4em] text-brand">Luxury Car Share</p>
+          <h1 className="mx-auto mt-6 max-w-3xl font-display text-4xl leading-tight text-foreground sm:text-6xl">
+            特別な一日を、<br className="hidden sm:block" />最上級の一台とともに。
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-muted sm:text-base">
+            アストンマーティン DB11、ランドローバー ディフェンダー 110。
+            厳選されたラグジュアリーカーを、シンプルな予約で。
           </p>
+          <div className="mt-10">
+            <Link
+              href="/cars"
+              className="inline-block rounded-full bg-brand px-10 py-3.5 text-sm font-semibold tracking-wide text-background transition hover:bg-brand-strong"
+            >
+              ラインナップを見る
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* 検索バー */}
+      <section className="mx-auto -mt-8 max-w-5xl px-4">
+        <SearchBar />
+      </section>
+
+      {/* 特徴 */}
+      <section className="mx-auto max-w-6xl px-4 py-20">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {[
+            { no: "01", title: "厳選された車両", desc: "名門ブランドの一台を、確かなコンディションでご用意" },
+            { no: "02", title: "24時間オンライン予約", desc: "いつでも空車確認・予約・キャンセルが可能" },
+            { no: "03", title: "安心の保険付帯", desc: "すべての予約に車両保険を自動で付帯" },
+          ].map((f) => (
+            <div key={f.no} className="rounded-2xl border border-line bg-surface p-8">
+              <div className="font-display text-3xl text-brand">{f.no}</div>
+              <h3 className="mt-4 font-display text-lg text-foreground">{f.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{f.desc}</p>
+            </div>
+          ))}
         </div>
-      </main>
+      </section>
+
+      {/* ラインナップ */}
+      <section className="mx-auto max-w-6xl px-4 pb-24">
+        <div className="mb-8 flex items-end justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-brand">Lineup</p>
+            <h2 className="mt-2 font-display text-2xl text-foreground">ラインナップ</h2>
+          </div>
+          <Link href="/cars" className="text-sm font-medium text-brand transition hover:text-brand-strong">
+            すべて見る →
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {cars.map((car) => (
+            <CarCard key={car.id} car={car} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
