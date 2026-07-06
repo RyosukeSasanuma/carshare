@@ -52,7 +52,7 @@ async function main() {
       location: "東京都港区",
       description:
         "5.2L V12ツインターボを搭載した英国製グランドツアラー。伸びやかなボディに宿る圧倒的な加速と気品。ボディカラーはピュアホワイト。特別な一日を、最上級のドライビングとともに。",
-      imageUrl: "/cars/aston-db11.svg",
+      imageUrl: "/cars/aston-db11.jpg",
     },
     {
       name: "ランドローバー ディフェンダー 110",
@@ -66,7 +66,7 @@ async function main() {
       location: "東京都港区",
       description:
         "3.0L 直6エンジンを積む本格SUV。悪路を意のままに走破するタフネスと、洗練されたラグジュアリーを両立。都会でもアウトドアでも映える一台です。",
-      imageUrl: "/cars/defender-110.svg",
+      imageUrl: "/cars/defender-110.jpg",
     },
   ];
 
